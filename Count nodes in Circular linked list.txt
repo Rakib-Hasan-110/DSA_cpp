@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int x) {
+        data = x;
+        next = nullptr;
+    }
+};
+
+// Function to count nodes in a given Circular
+// linked list 
+int countNodes(Node* head) {
+    if (head == nullptr) return 0;
+
+    Node* curr = head;
+    int result = 0;
+
+    do {
+        curr = curr->next;
+        result++;
+    } while (curr != head);
+
+    return result;
+}
+
+int main() {
+  
+    // Create list: 1->2->3->4->5--->1
+    Node* head = new Node(1);
+    head->next = new Node(2);
+    head->next->next = new Node(3);
+    head->next->next->next = new Node(4);
+    head->next->next->next->next = new Node(5);
+    head->next->next->next->next->next = head;
+
+    cout << countNodes(head);
+
+    return 0;
+}
