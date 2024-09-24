@@ -1,0 +1,77 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+  public:
+    int data;
+    Node *next;
+    Node *prev;
+
+    Node(int new_data) {
+        data = new_data;
+        next = nullptr;
+        prev = nullptr;
+    }
+};
+
+// Function to delete a node after a given 
+// node in doubly linked list
+Node *deleteAfter(Node *head, int key) {
+    Node *curr = head;
+
+    // Iterate over Linked List to find the key
+    while (curr != nullptr) {
+        if (curr->data == key)
+            break;
+        curr = curr->next;
+    }
+
+    // If curr is NULL or curr->next is NULL, 
+      // there is no node to delete
+    if (curr == nullptr || curr->next == nullptr)
+        return head;
+
+    // Node to be deleted
+    Node *nodeDelete = curr->next;
+
+    // Update the next of the current node 
+      // to the next of the node to be deleted
+    curr->next = nodeDelete->next;
+
+    // If the node to be deleted is not the last node,
+      // update the previous pointer of the next node
+    if (nodeDelete->next != nullptr) {
+        nodeDelete->next->prev = curr;
+    }
+
+    // Free the memory of the node to be deleted
+    delete nodeDelete;
+    return head;
+}
+
+void printList(Node *head) {
+    Node *curr = head;
+    while (curr != nullptr) {
+        cout << " " << curr->data;
+        curr = curr->next;
+    }
+    cout << endl;
+}
+
+int main() {
+  
+    // Create a hardcoded doubly linked list:
+    // 1 <-> 2 <-> 3 <-> 4
+    Node *head = new Node(1);
+    head->next = new Node(2);
+    head->next->prev = head;
+    head->next->next = new Node(3);
+    head->next->next->prev = head->next;
+    head->next->next->next = new Node(4);
+    head->next->next->next->prev = head->next->next;
+
+    head = deleteAfter(head, 2);
+    printList(head);
+
+    return 0;
+}
