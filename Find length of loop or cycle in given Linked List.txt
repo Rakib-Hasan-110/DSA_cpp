@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+    Node(int x) {
+         data = x;
+          next = nullptr;
+    }
+};
+
+// This function detects and counts loop
+// nodes in the list. If loop is not there
+// then returns 0
+int countNodesinLoop(Node* head) {
+  
+    unordered_set<Node*> visited;
+    Node* current = head;
+    int count = 0;
+
+    while (current != nullptr) {
+      
+        // If the node is already visited, 
+          // it means there is a loop
+        if (visited.find(current) != visited.end()) {
+            struct Node* startOfLoop = current;
+            do {
+                count++;
+                current = current->next;
+            } while (current != startOfLoop);
+            return count;
+        }
+
+        // Mark the current node as visited
+        visited.insert(current);
+
+        // Move to the next node
+        current = current->next;
+    }
+
+    // Return 0 to indicate that
+    //   there is no loop
+    return 0;
+}
+
+int main() {
+      
+      //create linked list 1->2->3->4->5
+    Node* head = new Node(1);
+    head->next = new Node(2);
+    head->next->next = new Node(3);
+    head->next->next->next = new Node(4);
+    head->next->next->next->next = new Node(5);
+      
+      //loop from 5 to 2
+    head->next->next->next->next->next = head->next;
+
+    cout << countNodesinLoop(head) << endl;
+
+    return 0;
+}
