@@ -1,0 +1,78 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* prev;
+    Node* next;
+  
+    Node(int new_data) {
+        data = new_data;
+        prev = nullptr;
+        next = nullptr;
+    }
+};
+
+// Function to insert element x into sorted DLL
+Node* sortedInsert(Node* head, int x) {
+  
+    // Create a new node with the given data
+    Node* newNode = new Node(x);
+
+    // If the list is empty, set new node as the head
+    if (head == nullptr) {
+        return newNode;
+    }
+
+    // If new node needs to be inserted at beginning
+    if (x <= head->data) {
+        newNode->next = head;
+        head->prev = newNode;
+        return newNode;
+    }
+
+    // Traverse the list to find correct position
+    Node* curr = head;
+    while (curr->next != nullptr && curr->next->data < x) {
+        curr = curr->next;
+    }
+
+    // Insert the new node in the correct position
+    newNode->next = curr->next;
+    if (curr->next != nullptr) {
+        curr->next->prev = newNode;
+    }
+    curr->next = newNode;
+    newNode->prev = curr;
+
+    return head;
+}
+
+void printList(Node* curr) {
+    while (curr != nullptr) {
+        cout << curr->data << " ";
+        curr = curr->next;
+    }
+}
+
+int main() {
+  
+    // Create hardcoded DLL: 
+      // 3 <-> 5 <-> 8 <-> 10 <-> 12
+    Node* head = new Node(3);
+    head->next = new Node(5);
+    head->next->prev = head;
+    head->next->next = new Node(8);
+    head->next->next->prev = head->next;
+    head->next->next->next = new Node(10);
+    head->next->next->next->prev = head->next->next;
+    head->next->next->next->next = new Node(12);
+    head->next->next->next->next->prev = 
+        head->next->next->next;
+
+    int x = 9;
+    head = sortedInsert(head, x);
+    printList(head);
+    return 0;
+}
