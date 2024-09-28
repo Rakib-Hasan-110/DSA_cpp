@@ -1,0 +1,100 @@
+/* Md Rakib Hasan Rabbi
+   Id-41230301595
+   3F  */
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int bubbleSort(int arr[], int n) {
+    int swapCount = 0;
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(arr[j], arr[j + 1]);
+                swapCount++;
+            }
+        }
+    }
+    return swapCount;
+}
+
+int selectionSort(int arr[], int n) {
+    int swapCount = 0;
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        if (minIndex != i) {
+            swap(arr[i], arr[minIndex]);
+            swapCount++;
+        }
+    }
+    return swapCount;
+}
+
+int insertionSort(int arr[], int n) {
+    int swapCount = 0;
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+            swapCount++;
+        }
+        arr[j + 1] = key;
+    }
+    return swapCount;
+}
+
+void displayArray(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+void takeInput(int arr[], int n) {
+    cout << "Enter the elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+}
+
+int main() {
+    int n;
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    int arr[1000];
+
+    takeInput(arr, n);
+
+    int arrBubble[1000], arrSelection[1000], arrInsertion[1000];
+    for (int i = 0; i < n; i++) {
+        arrBubble[i] = arr[i];
+        arrSelection[i] = arr[i];
+        arrInsertion[i] = arr[i];
+    }
+
+    int bubbleSwaps = bubbleSort(arrBubble, n);
+    cout << "Bubble Sort Swap Count: " << bubbleSwaps << endl;
+    cout << "Sorted Array (Bubble Sort): ";
+    displayArray(arrBubble, n);
+
+    int selectionSwaps = selectionSort(arrSelection, n);
+    cout << "Selection Sort Swap Count: " << selectionSwaps << endl;
+    cout << "Sorted Array (Selection Sort): ";
+    displayArray(arrSelection, n);
+
+    int insertionSwaps = insertionSort(arrInsertion, n);
+    cout << "Insertion Sort Swap Count: " << insertionSwaps << endl;
+    cout << "Sorted Array (Insertion Sort): ";
+    displayArray(arrInsertion, n);
+
+    return 0;
+}
