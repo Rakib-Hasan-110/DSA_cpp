@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int getMaxArea(vector<int> &hist){
+    int res = 0, n = hist.size();
+  
+    for(int i = 0; i < n; i++){
+        int curr = hist[i];
+      
+
+        for(int j = i-1; j>=0 && hist[j] >= hist[i]; j--)
+             curr += hist[i];
+      
+         
+        for(int j = i+1; j<n && hist[j] >= hist[i]; j++)
+            curr += hist[i];
+      
+        res = max(res, curr);
+    }
+    return res;
+}
+
+int main() 
+{ 
+    vector<int> hist =  {60, 20, 50, 40, 10, 50, 60};
+    cout << getMaxArea(hist);
+    return 0; 
+}
